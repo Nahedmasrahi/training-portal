@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
 
 
@@ -10,41 +11,106 @@ export default function RegisterPage() {
   const router = useRouter();
 
   return (
-    <div className="flex h-screen">
+   <div className="flex h-screen bg-[#F2F4F5]">
 
-      {/* LEFT SIDE – GREEN AREA */}
-      <div className="w-1/2 bg-[#0A4B3B] relative flex flex-col items-center justify-center text-white overflow-hidden">
+      {/* LEFT SECTION */}
+      <div className="w-1/2 bg-[#0c604c]
+ flex flex-col items-center justify-center relative text-white overflow-hidden">
 
-        {/* خطوط الخلفية */}
-        <div className="absolute inset-0 pointer-events-none">
+        {/* Background Lines */}
+<div className="absolute inset-0 pointer-events-none z-0">
+  <div className="absolute inset-0 bg-[url('/bg-lines.png')] bg-cover bg-no-repeat bg-left-top" />
+</div>
+
+
+        {/* Logo */}
+        <div className="relative z-20 flex flex-col items-center">
           <img
-            src="/bg-lines.png"
-            className="w-full h-full object-cover opacity-90"
+            src="/logo.png"
+            alt="Logo"
+            className="w-40 h-40 mb-4 object-contain bg-transparent select-none"
           />
+          <h1 className="text-3xl font-bold">بوابة التدريب</h1>
         </div>
 
-           {/* زر الرجوع */}
-      <button
-  onClick={() => router.back()}
+        
+        
+
+       {/* Social Icons Bar */}
+<div
   className="
-    absolute top-6 left-6 flex items-center h-10 rounded-full overflow-hidden 
-    shadow-lg z-50
-    cursor-pointer 
-     transition-all duration-200
-     hover:scale-105
-     active:scale-95 
-     "
+    absolute bottom-6 left-1/2 -translate-x-1/2
+    flex items-center gap-6
+   
+    py-3 px-12 rounded-full
+    z-50
+  "
+>
+  {/* X Icon – رابط تويتر المستشفى */}
+<a href="https://x.com/ju_hospital?s=11&t=SFEUOKTv6srmDQMpJoLRBA" target="_blank">
+  <img src="/twitter.png" alt="X" className="w-8 h-8 object-contain cursor-pointer" />
+</a>
+
+{/* WhatsApp – رقم الواتساب */}
+<a href="https://wa.me/0173296778" target="_blank">
+  <img src="/whatsapp.png" alt="WhatsApp" className="w-8 h-8 object-contain cursor-pointer" />
+</a>
+
+{/* Mail – البريد الإلكتروني */}
+<a href="mailto:JUH@jazanu.edu.sa">
+  <img src="/round.png" alt="Mail" className="w-8 h-8 object-contain cursor-pointer" />
+</a>
+
+{/* Phone – الاتصال المباشر */}
+<a href="tel:0173295700">
+  <img src="/call.png" alt="Call" className="w-8 h-8 object-contain cursor-pointer" />
+</a>
+
+</div>
+
+          {/* زر الرجوع */}
+<button
+  onClick={() => router.back()}
+  aria-label="الرجوع للصفحة السابقة"
+  className="
+    group
+    absolute top-6 left-6 z-50
+    flex items-center h-11
+    rounded-full overflow-hidden
+    bg-black/60 backdrop-blur-md
+    shadow-xl
+    transition-all duration-300 ease-out
+    hover:bg-black/75
+    hover:shadow-2xl
+    active:scale-95
+  "
 >
 
-  {/* الجزء الأسود الدائري الشفاف */}
-  <div className="bg-black/70 backdrop-blur-md w-14 h-full flex items-center justify-center rounded-l-full">
-    <ArrowLeft size={38} strokeWidth={2} className="text-white" />
-  </div>
+  {/* الأيقونة */}
+  <span
+    className="
+      w-12 h-full
+      flex items-center justify-center
+      transition-transform duration-300
+      group-hover:-translate-x-1
+    "
+  >
+    <ArrowLeft size={26} strokeWidth={2.2} className="text-white" />
+  </span>
 
-  {/* الجزء الأبيض النصي */}
-  <div className="bg-white/90 px-2 h-full flex items-center text-base font-semibold text-black rounded-r-full">
+  {/* النص */}
+  <span
+    className="
+      max-w-0 overflow-hidden
+      whitespace-nowrap
+      text-sm font-medium text-white
+      transition-all duration-300
+      group-hover:max-w-xs
+      group-hover:px-4
+    "
+  >
     الرجوع للخلف
-  </div>
+  </span>
 
 </button>
 
@@ -56,11 +122,8 @@ export default function RegisterPage() {
 
 
 
-        {/* اللوجو */}
-        <div className="relative z-20 text-center mt-10">
-          <img src="/logo.png" className="w-52 mx-auto" />
-          <h1 className="text-3xl font-bold mt-4">بوابة التدريب</h1>
-        </div>
+
+        
       </div>
 
     {/* RIGHT SIDE – FORM */}
@@ -104,22 +167,23 @@ export default function RegisterPage() {
   </label>
 </div>
 
-<div className="relative w-[115%]">
-  <select
-    className="w-full p-2.5 rounded-lg border bg-white mb-4 text-sm text-right appearance-none"
-  >
-    <option>الرجاء اختيار الكلية</option>
-    <option>كلية الهندسة</option>
-    <option>كلية علوم الحاسب</option>
-    <option>كلية إدارة الأعمال</option>
-    <option>كلية الطب</option>
-  </select>
+<div className="relative w-[115%] group">
+      <select
+      onChange={(e) => e.target.blur()}
+        className="w-full p-2.5 pr-4 pl-10 rounded-lg border bg-white mb-4 text-sm text-right appearance-none focus:outline-none peer transition-all"
+      >
+        <option>الرجاء اختيار الكلية</option>
+        <option>كلية الهندسة</option>
+        <option>كلية علوم الحاسب</option>
+        <option>كلية إدارة الأعمال</option>
+        <option>كلية الطب</option>
+      </select>
 
-  {/* السهم الجديد على اليسار */}
-  <span className="absolute left-3 top-1/3 -translate-y-1/2 text-gray-500 pointer-events-none">
-    ▼
-  </span>
-</div>
+      {/* السهم */}
+      <span className="absolute left-3 top-[35%] -translate-y-1/2 text-gray-400   duration-300 peer-focus:rotate-180 ">
+        <ChevronDownIcon className="w-5 h-5" />
+      </span>
+    </div>
 
 
 

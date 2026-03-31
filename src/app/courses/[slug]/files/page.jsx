@@ -1,5 +1,5 @@
 "use client";
-
+import { Check } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useParams, usePathname } from "next/navigation";
 import { Calendar, Clock, MapPin, Award, FileText } from "lucide-react";
@@ -14,7 +14,19 @@ export default function CourseFilesPage() {
   const isFiles = pathname === `/courses/${slug}/files`;
 
   const fileInputRef = useRef(null);
+
+  const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [fileName, setFileName] = useState("");
+  
+  const [successAssignments, setSuccessAssignments] = useState({});
+
+  const handleSend = (assignmentId) => {
+    if (!fileName) return alert("اختر ملف أولاً قبل الإرسال!");
+    setSuccessAssignments((prev) => ({
+      ...prev,
+      [assignmentId]: true,
+    }));
+  };
 
   return (
     <>
@@ -82,69 +94,98 @@ export default function CourseFilesPage() {
       <div className="bg-white rounded-xl shadow p-6 space-y-6">
         <h2 className="text-xl font-bold">إرفاق الملفات</h2>
 
-        {/* واجبات */}
-        <div className="flex items-center gap-4 border rounded-lg p-4">
-          <FileText size={32} className="text-gray-500" />
-          <div>
-            <p className="font-semibold">الواجب الأول</p>
-            <p className="text-sm text-gray-500">
-              موعد التسليم: 2025/12/31 – 11:59pm
-            </p>
+        {/* ===== الواجب الأول ===== */}
+        <div
+          onClick={() => {
+            setSelectedAssignment(1);
+            fileInputRef.current.click();
+          }}
+          className="flex flex-col gap-2 border rounded-lg p-4 cursor-pointer hover:bg-gray-50"
+        >
+          <div className="flex items-center gap-4">
+            <FileText size={32} className="text-gray-500" />
+            <div>
+              <p className="font-semibold">الواجب الأول</p>
+              <p className="text-sm text-gray-500">
+                موعد التسليم: 2025/12/31 – 11:59pm
+              </p>
+            </div>
           </div>
+
+          {selectedAssignment === 1 && fileName && (
+            <div className="flex items-center justify-between bg-gray-100 rounded-md px-3 py-2 mt-2">
+              <p className="text-sm text-gray-700 truncate">📄 {fileName}</p>
+              {successAssignments[1] ? (
+                <div className="text-green-700 font-semibold">
+  <Check size={20} />
+</div>
+              ) : (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSend(1);
+                  }}
+                  className="bg-green-700 text-white px-4 py-1.5 rounded-md hover:bg-green-800"
+                >
+                  إرسال
+                </button>
+              )}
+            </div>
+          )}
         </div>
 
-        <div className="flex items-center gap-4 border rounded-lg p-4">
-          <FileText size={32} className="text-gray-500" />
-          <div>
-            <p className="font-semibold">الواجب الثاني</p>
-            <p className="text-sm text-gray-500">
-              موعد التسليم: 2025/12/31 – 10:59pm
-            </p>
+        {/* ===== الواجب الثاني ===== */}
+        <div
+          onClick={() => {
+            setSelectedAssignment(2);
+            fileInputRef.current.click();
+          }}
+          className="flex flex-col gap-2 border rounded-lg p-4 cursor-pointer hover:bg-gray-50"
+        >
+          <div className="flex items-center gap-4">
+            <FileText size={32} className="text-gray-500" />
+            <div>
+              <p className="font-semibold">الواجب الثاني</p>
+              <p className="text-sm text-gray-500">
+                موعد التسليم: 2025/12/31 – 10:59pm
+              </p>
+            </div>
           </div>
+
+          {selectedAssignment === 2 && fileName && (
+            <div className="flex items-center justify-between bg-gray-100 rounded-md px-3 py-2 mt-2">
+              <p className="text-sm text-gray-700 truncate">📄 {fileName}</p>
+              {successAssignments[2] ? (
+                <div className="text-green-700 font-semibold">
+  <Check size={20} />
+</div>
+              ) : (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSend(2);
+                  }}
+                  className="bg-green-700 text-white px-4 py-1.5 rounded-md hover:bg-green-800"
+                >
+                  إرسال
+                </button>
+              )}
+            </div>
+          )}
         </div>
 
-        {/* ===== رفع ملف فعلي ===== */}
-        <div className="border-dashed border-2 rounded-lg p-8 text-center">
-          <p className="mb-4 text-gray-500">
-            {fileName ? `📄 ${fileName}` : "أنزل الملف هنا أو اختره من جهازك"}
-          </p>
-
-          <input
-            type="file"
-            ref={fileInputRef}
-            className="hidden"
-            onChange={(e) => {
-              if (e.target.files.length > 0) {
-                setFileName(e.target.files[0].name);
-              }
-            }}
-          />
-
-          <button
-            onClick={() => fileInputRef.current.click()}
-            className="bg-green-700 text-white px-6 py-2 rounded-lg hover:bg-green-800"
-          >
-            إرفاق ملف
-          </button>
-        </div>
-
-        {/* زر الإرسال بالوسط */}
-        <div className="flex justify-center">
-          <button
-            disabled={!fileName}
-            className={`px-10 py-2 rounded-lg text-white
-              ${
-                fileName
-                  ? "bg-green-700 hover:bg-green-800"
-                  : "bg-gray-400 cursor-not-allowed"
-              }
-            `}
-          >
-            إرسال
-          </button>
-        </div>
+        {/* input مخفي */}
+        <input
+          type="file"
+          ref={fileInputRef}
+          className="hidden"
+          onChange={(e) => {
+            if (e.target.files.length > 0) {
+              setFileName(e.target.files[0].name);
+            }
+          }}
+        />
       </div>
     </>
   );
 }
-

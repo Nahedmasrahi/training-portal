@@ -104,7 +104,7 @@ export default function Dashboard() {
             cx="50%"
             cy="50%"
             r="45%"
-            stroke="#0C4A37"
+            stroke="#0C8A4A"
             strokeWidth="10"
             fill="none"
             strokeDasharray={`${attendance * 2.8} 300`}
@@ -119,7 +119,7 @@ export default function Dashboard() {
 
       <p className="mt-2 text-gray-600">نسبة الغياب</p>
 
-      <button className="mt-3 bg-[#0C4A37] text-white px-4 py-1 rounded-lg">
+      <button className="mt-3 bg-[#0C8A4A] text-white px-4 py-1 rounded-lg">
         عرض السجل
       </button>
     </div>
@@ -138,7 +138,7 @@ export default function Dashboard() {
           <p>9:00 صباحاً</p>
           <p>مسرح كلية العلوم أو عبر الزوم</p>
 
-          <button className="mt-2 bg-[#0C4A37] text-white px-6 py-2 rounded-lg">
+          <button className="mt-2 bg-[#0C8A4A] text-white px-6 py-2 rounded-lg">
             الدخول للقاء
           </button>
         </div>
@@ -194,7 +194,7 @@ export default function Dashboard() {
               عدد المهام المتبقية: {item.tasks}
             </p>
 
-            <button className="mt-2 bg-[#0C4A37] text-white px-3 py-1 rounded-lg text-xs">
+            <button className="mt-2 bg-[#0C8A4A] text-white px-3 py-1 rounded-lg text-xs">
               الانتقال للبرنامج
             </button>
           </div>
@@ -217,7 +217,7 @@ export default function Dashboard() {
         </div>
       ))}
 
-      <button className="mt-4 bg-[#0C4A37] text-white px-4 py-1 rounded-lg">
+      <button className="mt-4 bg-[#0C8A4A] text-white px-4 py-1 rounded-lg">
         عرض الأحداث
       </button>
     </div>
@@ -230,7 +230,7 @@ export default function Dashboard() {
         لا تنسَ حضور اللقاء التعريفي غداً الساعة 10 صباحاً.
       </p>
 
-      <button className="mt-5 bg-[#0C4A37] text-white px-4 py-1 rounded-lg">
+      <button className="mt-5 bg-[#0C8A4A] text-white px-4 py-1 rounded-lg">
         عرض الإشعارات
       </button>
     </div>
