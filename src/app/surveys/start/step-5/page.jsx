@@ -1,7 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Bell, UserCircle, ArrowLeft, ArrowRight } from "lucide-react";
+
+import {
+  Bell,
+  UserCircle,
+  ArrowLeft,
+  ArrowRight,
+} from "lucide-react";
+
 import { useRouter } from "next/navigation";
 
 const OPTIONS = [
@@ -11,6 +18,7 @@ const OPTIONS = [
 ];
 
 export default function SurveyStep5Page() {
+
   const router = useRouter();
 
   const questions = useMemo(
@@ -23,81 +31,125 @@ export default function SurveyStep5Page() {
   );
 
   const [answers, setAnswers] = useState(() =>
-    Object.fromEntries(questions.map((_, i) => [i, ""]))
+    Object.fromEntries(
+      questions.map((_, i) => [i, ""])
+    )
   );
 
-  const canNext = questions.every((_, i) => answers[i]);
+  const canNext = questions.every(
+    (_, i) => answers[i]
+  );
 
   return (
     <div className="w-full">
+
       {/* ================= Header ================= */}
       <div className="flex justify-between items-center mb-10">
+
         <div className="text-right">
-          <h2 className="text-3xl font-bold text-gray-900">مرحبًا ياسر</h2>
+
+          <h2 className="text-3xl font-bold text-gray-900">
+            مرحبًا ياسر
+          </h2>
+
           <p className="text-gray-600 text-lg mt-1">
             كن على اطلاع بكل ما يحدث في جامعتك
           </p>
+
         </div>
 
         <div className="flex items-center gap-4">
-          <UserCircle size={32} className="text-gray-700 cursor-pointer" />
-          <Bell size={28} className="text-gray-700 cursor-pointer" />
+
+          <UserCircle
+            size={32}
+            className="text-gray-700 cursor-pointer"
+          />
+
+          <Bell
+            size={28}
+            className="text-gray-700 cursor-pointer"
+          />
+
         </div>
+
       </div>
 
       {/* ================= Title ================= */}
       <div className="text-center mb-8">
+
         <h1 className="text-3xl font-extrabold text-gray-900">
           رضا الطلاب والطالبات عن العملية التدريبية
         </h1>
+
       </div>
 
-      {/* ================= Steps Bar (الأخضر للنقطة الثالثة) ================= */}
+      {/* ================= Steps ================= */}
       <div className="max-w-5xl mx-auto mb-10">
+
         <div className="relative">
+
           {/* Track */}
           <div className="h-2 w-full rounded-full bg-gray-200" />
 
-          {/* Progress: إلى النقطة الثالثة */}
-          <div className="absolute top-0 right-0 h-2 rounded-full bg-green-500 w-3/4" />
+          {/* Progress */}
+          <div className="absolute top-0 right-0 h-2 rounded-full bg-green-500 w-full" />
 
-          {/* Dots + Labels */}
+          {/* Dots */}
           <div className="absolute -top-3 left-0 right-0 flex items-start justify-between px-1">
+
             {/* 1 */}
             <div className="flex flex-col items-center gap-2">
+
               <div className="w-9 h-9 rounded-full bg-green-500 shadow-md ring-4 ring-green-500/20" />
+
               <span className="text-sm font-semibold text-gray-800">
                 بيئة التدريب
               </span>
+
             </div>
 
             {/* 2 */}
             <div className="flex flex-col items-center gap-2">
+
               <div className="w-9 h-9 rounded-full bg-green-500 shadow-md ring-4 ring-green-500/20" />
+
               <span className="text-sm font-semibold text-gray-800">
                 الدعم والإشراف
               </span>
+
             </div>
 
-            {/* 3 (Active) */}
+            {/* 3 */}
             <div className="flex flex-col items-center gap-2">
+
               <div className="w-9 h-9 rounded-full bg-green-500 shadow-md ring-4 ring-green-500/20" />
+
               <span className="text-sm font-semibold text-gray-800">
                 محتوى التدريب
               </span>
+
             </div>
 
             {/* 4 */}
             <div className="flex flex-col items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-gray-300" />
-              <span className="text-sm font-medium text-gray-500"> </span>
+
+              <div className="w-9 h-9 rounded-full bg-green-500 shadow-md ring-4 ring-green-500/20" />
+
+              <span className="text-sm font-semibold text-gray-800">
+                الأنشطة
+              </span>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
 
-      {/* ================= Card ================= */}
+      {/* ================= Questions ================= */}
       <div className="max-w-5xl mx-auto">
+
         <div
           className="rounded-2xl border border-gray-200 p-10"
           style={{
@@ -106,63 +158,117 @@ export default function SurveyStep5Page() {
               "0 10px 30px rgba(0,0,0,0.12) inset, 0 6px 20px rgba(0,0,0,0.12)",
           }}
         >
+
           <div className="space-y-14">
+
             {questions.map((q, idx) => (
-              <div key={idx} className="text-right">
+
+              <div
+                key={idx}
+                className="text-right"
+              >
+
                 <div className="text-xl font-semibold text-gray-900 mb-6">
+
                   {q}
+
                 </div>
 
-                {/* نفس ترتيب الصورة: نعم يمين، لا وسط، جزئياً يسار */}
+                {/* الخيارات */}
                 <div className="flex items-center justify-between max-w-3xl ml-auto">
+
                   {OPTIONS.map((opt) => (
+
                     <label
                       key={opt.value}
                       className="flex items-center gap-3 cursor-pointer select-none"
                     >
-                      <span className="text-lg text-gray-900">{opt.label}</span>
+
+                      <span className="text-lg text-gray-900">
+
+                        {opt.label}
+
+                      </span>
+
                       <input
                         type="radio"
                         name={`q-${idx}`}
                         value={opt.value}
-                        checked={answers[idx] === opt.value}
+                        checked={
+                          answers[idx] === opt.value
+                        }
                         onChange={() =>
-                          setAnswers((prev) => ({ ...prev, [idx]: opt.value }))
+                          setAnswers((prev) => ({
+                            ...prev,
+                            [idx]: opt.value,
+                          }))
                         }
                         className="w-5 h-5 accent-green-600"
                       />
+
                     </label>
+
                   ))}
+
                 </div>
+
               </div>
+
             ))}
+
           </div>
+
         </div>
 
-        {/* ================= Bottom Buttons ================= */}
+        {/* ================= Buttons ================= */}
         <div className="mt-10 flex items-center justify-center gap-6">
+
+          {/* السابق */}
           <button
-            onClick={() => router.push("/surveys/start/step-4")}
+            onClick={() =>
+              router.push("/surveys/start/step-4")
+            }
             className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-8 py-2.5 rounded-lg font-semibold flex items-center gap-2"
           >
+
             <ArrowRight size={18} />
+
             السابق
+
           </button>
 
+          {/* التالي */}
           <button
             disabled={!canNext}
-            onClick={() => router.push("/surveys/start/step-6")}
+            onClick={() => {
+
+              localStorage.setItem(
+                "survey-step-5",
+                JSON.stringify(answers)
+              );
+
+              router.push(
+                "/surveys/start/step-6"
+              );
+
+            }}
             className={`px-8 py-2.5 rounded-lg font-semibold flex items-center gap-2 ${
               canNext
                 ? "bg-gray-200 hover:bg-gray-300 text-gray-800"
                 : "bg-gray-100 text-gray-400 cursor-not-allowed"
             }`}
           >
+
             التالي
+
             <ArrowLeft size={18} />
+
           </button>
+
         </div>
+
       </div>
+
     </div>
   );
 }
