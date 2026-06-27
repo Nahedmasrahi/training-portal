@@ -1,262 +1,596 @@
 "use client";
-import AdminSidebar from "@/components/AdminSidebar";
-
+import { Users, Clock, MapPin } from "lucide-react";
+import Image from "next/image";
+import { useRouter, usePathname } from "next/navigation";
+import { useState } from "react";
 import {
-  Users,
-  GraduationCap,
-  BookOpen,
-  CalendarCheck,
-  FileText
+  Home,
+  BarChart2,
+  FileText,
+  ClipboardList,
+  Star,
+  User,
+  Settings,
+  CalendarDays,
+  LogOut,
+  Bell,
+  Download,
+  ChevronLeft
 } from "lucide-react";
 
-export default function AdminPage() {
 
-  const cards = [
-    {
-      title: "المتدربون",
-      number: "1248",
-      icon: Users
-    },
-    {
-      title: "المدربون",
-      number: "86",
-      icon: GraduationCap
-    },
-    {
-      title: "الدورات",
-      number: "45",
-      icon: BookOpen
-    },
-    {
-      title: "نسبة الحضور",
-      number: "87%",
-      icon: CalendarCheck
-    }
-  ];
 
-  return (
-    <div
-      dir="rtl"
-      className="
-      min-h-screen
-      bg-gray-50
-      "
-    >
+const menuItems = [
+  { text: "الصفحة الرئيسية", icon: Home, path: "/admin" },
+  { text: "الحضور والغياب", icon: BarChart2, path: "/admin/attendance" },
+  { text: "عرض التقارير", icon: FileText, path: "/admin/reports" },
+  { text: "البرامج والدورات", icon: CalendarDays, path: "/admin/courses" },
+  { text: "الإستبيانات", icon: ClipboardList, path: "/admin/surveys" },
+  { text: "التقييمات", icon: Star, path: "/admin/evaluations" },
+  { text: "التقويم", icon: CalendarDays, path: "/calendar" },
+  { text: "الملف الشخصي", icon: User, path: "/profile" },
+  { text: "الإعدادات", icon: Settings, path: "/settings" },
+];
 
-      <AdminSidebar />
 
-      <main
-        className="
-        mr-72
-        p-10
-        h-screen
-        overflow-y-auto
-        "
-      >
 
-        {/* الهيدر */}
+export default function AdminDashboard() {
 
-        <div
-          className="
-          flex justify-between
-          items-center
-          mb-10
-          "
-        >
 
-          <div>
+const router = useRouter();
+const pathname = usePathname();
+const [showNotifications, setShowNotifications] = useState(false);
 
-            <h1 className="
-            text-3xl
-            font-bold
-            text-gray-800
-            ">
-              مرحباً مشرف
-            </h1>
 
-            <p className="
-            text-gray-500
-            mt-2
-            ">
-              كن على اطلاع بكل ما يحدث في بوابة التدريب
-            </p>
+const reports = [
+"تقرير برنامج سحب الدم",
+"تقرير برنامج سحب الدم",
+"تقرير برنامج سحب الدم",
+"تقرير برنامج سحب الدم",
+];
 
-          </div>
 
-          <div
-            className="
-            w-12 h-12
-            rounded-full
-            bg-[#064B35]
-            text-white
-            flex items-center justify-center
-            font-bold
-            "
-          >
-            AD
-          </div>
+const notifications=[
+"تم إضافة متدربين في برنامج سحب الدم",
+"تم رفع تقرير جديد",
+"تم إضافة استبيان جديد",
+];
 
-        </div>
 
-        {/* الكروت */}
 
-        <div
-          className="
-          grid
-          grid-cols-4
-          gap-6
-          "
-        >
+return (
 
-          {cards.map((card) => {
+<div 
+className="flex min-h-screen bg-gray-50"
+dir="rtl"
+>
 
-            const Icon = card.icon;
 
-            return (
 
-              <div
-                key={card.title}
-                className="
-                bg-white
-                rounded-2xl
-                shadow-sm
-                p-6
-                border
-                "
-              >
+{/* Sidebar */}
 
-                <div className="flex justify-between">
+<aside className="fixed top-0 right-0 h-full w-64 bg-[#083427] text-white flex flex-col z-50">
 
-                  <div>
 
-                    <p className="text-gray-500">
-                      {card.title}
-                    </p>
+<div className="py-8 px-4 flex flex-col items-center space-y-3">
 
-                    <h2 className="
-                    text-3xl
-                    font-bold
-                    mt-3
-                    ">
-                      {card.number}
-                    </h2>
+<Image
+src="/logo.png"
+width={60}
+height={60}
+alt="logo"
+/>
 
-                  </div>
+<h2 className="text-xl font-bold">
+بوابة التدريب
+</h2>
 
-                  <Icon
-                    className="text-[#0C8A4A]"
-                    size={35}
-                  />
+</div>
 
-                </div>
 
-                <button
-                  className="
-                  mt-6
-                  border
-                  border-[#0C8A4A]
-                  text-[#0C8A4A]
-                  px-4
-                  py-2
-                  rounded-lg
-                  text-sm
-                  "
-                >
-                  عرض التفاصيل
-                </button>
 
-              </div>
+<div className="border-b border-white/20"/>
 
-            )
 
-          })}
 
-        </div>
+<div className="bg-[#0C4A37] flex-1 px-4 py-4 space-y-2">
 
-        {/* التنبيهات + التقارير */}
 
-        <div
-          className="
-          grid
-          grid-cols-2
-          gap-6
-          mt-8
-          "
-        >
+{
+menuItems.map((item,index)=>{
 
-          {/* التنبيهات */}
+const Icon=item.icon;
 
-          <div
-            className="
-            bg-white
-            rounded-2xl
-            p-6
-            shadow-sm
-            "
-          >
+const active=pathname===item.path;
 
-            <h2 className="font-bold mb-5">
-              التنبيهات
-            </h2>
 
-            {[
-              "تم إضافة متدرب جديد",
-              "تم تسجيل دورة جديدة",
-              "تم تحديث الحضور"
-            ].map(x => (
-              <div
-                key={x}
-                className="
-                border-b
-                py-3
-                text-gray-600
-                "
-              >
-                {x}
-              </div>
-            ))}
+return(
 
-          </div>
+<button
+key={index}
+onClick={()=>router.push(item.path)}
 
-          {/* التقارير */}
+className={`w-full flex justify-end items-center gap-3 px-3 py-2 rounded-md
+${active ? "bg-white/20 font-semibold":"text-white/80 hover:bg-white/10"}
+`}
+>
 
-          <div
-            className="
-            bg-white
-            rounded-2xl
-            p-6
-            shadow-sm
-            "
-          >
 
-            <h2 className="font-bold mb-5">
-              آخر التقارير
-            </h2>
+<span>{item.text}</span>
 
-            {[
-              "تقرير الحضور",
-              "تقرير الدورات",
-              "تقرير المتدربين"
-            ].map(x => (
-              <div
-                key={x}
-                className="
-                border
-                rounded-lg
-                p-3
-                mb-3
-                "
-              >
-                📄 {x}
-              </div>
-            ))}
+<Icon size={18}/>
 
-          </div>
 
-        </div>
+</button>
 
-      </main>
+)
+
+})
+}
+
+
+
+<button className="w-full flex justify-end items-center gap-3 px-3 py-2 mt-6">
+
+<span>
+تسجيل الخروج
+</span>
+
+<LogOut size={18}/>
+
+</button>
+
+
+
+</div>
+
+
+
+</aside>
+
+
+
+
+
+
+{/* Dashboard */}
+
+<main className="flex-1 mr-64 p-8 text-gray-800">
+
+
+{/* Header */}
+
+
+<div className="flex justify-between items-center mb-8">
+
+
+<div>
+
+<h1 className="text-3xl font-bold">
+مرحباً ياسر
+</h1>
+
+
+<p className="text-gray-600 text-lg mt-1">
+كن على اطلاع بكل ما يحدث في جامعتك
+</p>
+
+
+</div>
+
+
+
+
+
+<div className="flex items-center gap-5">
+
+<User size={35}/>
+
+
+<Bell
+size={30}
+className="cursor-pointer"
+onClick={()=>router.push("/admin/notifications")}
+/>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<div className="grid grid-cols-12 gap-6">
+
+
+
+
+
+<div className="col-span-5 space-y-8">
+
+
+
+<div className="bg-white shadow rounded-xl p-5 w-full flex items-center justify-between">
+
+
+
+  {/* المعلومات */}
+  <div className="text-right">
+
+
+    <h3 className="font-bold text-sm">
+      الحضور والغياب
+    </h3>
+
+
+    <p className="mt-3 text-xs">
+      برنامج سحب الدم
+    </p>
+
+
+    <p className="mt-3 text-xs flex items-center gap-1">
+      <Users size={14}/>52 طالب
+    </p>
+
+
+    <button className="bg-green-700 text-white text-xs px-3 py-1 rounded mt-4">
+      عرض التفاصيل
+    </button>
+
+
+  </div>
+
+
+
+
+  {/* دائرة النسبة */}
+  <div className="flex flex-col items-center">
+
+    <div className="relative w-20 h-20">
+
+      <svg className="w-full h-full rotate-[-90deg]">
+
+        <circle
+          cx="50%"
+          cy="50%"
+          r="35%"
+          stroke="#E5E7EB"
+          strokeWidth="6"
+          fill="none"
+        />
+
+
+        <circle
+          cx="50%"
+          cy="50%"
+          r="35%"
+          stroke="#0C8A4A"
+          strokeWidth="6"
+          fill="none"
+          strokeDasharray="87 100"
+          strokeLinecap="round"
+        />
+
+      </svg>
+
+
+      <p className="absolute inset-0 flex items-center justify-center text-sm font-bold">
+        87%
+      </p>
+
 
     </div>
-  );
+
+
+    <p className="mt-2 text-xs">
+      نسبة الحضور
+    </p>
+
+
+  </div>
+
+
+
+</div>
+
+
+
+
+
+<div className="bg-white rounded-xl shadow w-full">
+
+
+<h2 className="font-bold text-xl p-5">
+آخر التقارير
+</h2>
+
+
+
+{
+reports.map((r,i)=>(
+
+
+<div key={i} className="flex justify-between items-center p-5 border-t">
+
+
+<p>
+{r}
+</p>
+
+
+<FileText size={18}/>
+
+
+</div>
+
+
+))
+}
+
+
+
+
+<button className="bg-green-700 text-white text-xs px-3 py-1 rounded mt-3 mb-4 mr-5">
+عرض التفاصيل
+</button>
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div className="col-span-6 space-y-6">
+
+
+<div className="bg-white rounded-2xl shadow p-5 w-full">
+
+
+<h2 className="font-bold text-xl mb-5">
+التنبيهات
+</h2>
+
+
+
+{
+notifications.map((n,i)=>(
+
+<div 
+key={i} 
+className="flex justify-between items-center border-b py-5 text-sm"
+>
+
+
+<span>
+{n}
+</span>
+
+
+<ChevronLeft size={18}/>
+
+
+</div>
+
+
+))
+}
+
+
+
+<button 
+className="bg-green-700 text-white text-xs px-4 py-1 rounded mt-3 mb-3 mr-5"
+>
+عرض التفاصيل
+</button>
+
+
+
+</div>
+
+
+
+
+
+<div className="bg-white rounded-2xl shadow p-5 w-full">
+
+
+<h2 className="font-bold text-xl mb-5">
+البرامج التدريبية
+</h2>
+
+
+
+<div className="flex gap-4 items-center">
+
+
+
+
+
+<div className="flex-1 text-right">
+
+
+<h3 className="font-bold text-sm">
+برنامج سحب الدم
+</h3>
+
+
+<div className="flex justify-end gap-2 mt-4 text-xs">
+
+
+<span className="border rounded-lg px-3 py-2 bg-white flex items-center gap-1">
+<Users size={14}/>35 طالب
+</span>
+
+
+<span className="border rounded-lg px-3 py-2 bg-white flex items-center gap-1">
+<Clock size={14}/>10:00 صباحاً
+</span>
+
+
+<span className="border rounded-lg px-3 py-2 bg-white flex items-center gap-1">
+<MapPin size={14}/> قاعة التدريب
+</span>
+
+
+</div>
+
+
+
+<button className="bg-green-700 text-white text-xs px-3 py-1 rounded mt-4">
+عرض التفاصيل
+</button>
+
+
+</div>
+
+
+
+
+
+<Image
+  src="/blood.jpg"
+  width={150}
+  height={150}
+  alt="برنامج سحب الدم"
+  className="rounded-lg object-cover"
+/>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+{/* المهام القادمة */}
+
+<div className="bg-white rounded-2xl shadow p-5 w-full">
+
+
+<h2 className="font-bold text-xl mb-5">
+المهام القادمة
+</h2>
+
+
+
+<div className="grid grid-cols-4 gap-3">
+
+
+<div className="border rounded-lg p-5 text-center">
+<p>
+Task1
+</p>
+
+<span className="text-xs text-gray-400">
+11 Dec
+</span>
+
+</div>
+
+
+
+<div className="border rounded-lg p-5 text-center">
+<p>
+Task2
+</p>
+
+<span className="text-xs text-gray-400">
+15 Dec
+</span>
+
+</div>
+
+
+
+<div className="border rounded-lg p-5 text-center">
+<p>
+Task3
+</p>
+
+<span className="text-xs text-gray-400">
+17 Dec
+</span>
+
+</div>
+
+
+
+<div className="border rounded-lg p-5 text-center">
+<p>
+Task4
+</p>
+
+<span className="text-xs text-gray-400">
+28 Dec
+</span>
+
+</div>
+
+
+</div>
+
+
+
+
+<button className="bg-green-700 text-white text-xs px-3 py-1 rounded mt-3">
+عرض التفاصيل
+</button>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+</main>
+
+
+
+</div>
+
+)
+
+
 }
